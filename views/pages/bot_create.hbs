@@ -1,0 +1,29 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Создание бота</h1>
+</div>
+
+<form method="post" action="/api/admin/bot/create">
+    <div class="form-group">
+        <label>Username</label>
+        <input class="form-control" type="text" name="username" required value="">
+    </div>
+
+    <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="text" name="password" required value="">
+    </div>
+
+    <div class="form-group">
+        <label>Shared_secret</label>
+        <input class="form-control" type="text" name="shared_secret" required value="">
+    </div>
+
+    <div class="form-group">
+        <label>Identity_secret</label>
+        <input class="form-control" type="text" name="identity_secret" required value="">
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-icon-split">
+        <span class="text">Создать</span>
+    </button>
+</form>

@@ -1,0 +1,58 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Комиссия</h1>
+</div>
+
+<div style="display: flex;display: -webkit-flex; flex-wrap: wrap;-webkit-flex-wrap: wrap;margin: 0 -3px;">
+    {{#each items}}
+        <div data-id="{{ this.id }}" class="item" style="width: 80px;height: 80px;margin: 3px 3px;cursor: pointer;">
+            <div>
+                <img
+                        width="94"
+                        height="94"
+                        src="https://community.cloudflare.steamstatic.com/economy/image/{{ this.item.icon_url }}/360fx360f"
+                >
+            </div>
+            <p style="text-align: center;">{{ this.item.price }}$</p>
+        </div>
+    {{/each}}
+</div>
+
+<input id="tradeUrl" style="margin-top: 50px;" class="form-control" type="text" placeholder="Ссылка на обмен" value="">
+
+<button style="margin-top: 20px;" onclick="sendItems()" class="btn btn-primary btn-icon-split">
+    <span class="text">Отправить</span>
+</button>
+
+<script>
+    let selectedItems = [];
+
+    $('.item').on('click', function () {
+        const itemId = $(this).attr('data-id');
+
+        if ($(this).hasClass('selected')) {
+          $(this).removeClass('selected');
+
+          const index = selectedItems.indexOf(itemId);
+
+          if (index > -1) {
+            selectedItems.splice(index, 1);
+          }
+        } else {
+          $(this).addClass('selected');
+
+          selectedItems.push(itemId);
+        }
+    })
+
+    const sendItems = () => {
+      const tradeUrl = $('#tradeUrl').val();
+
+      window.location.href = `/api/admin/commission/send?trade_url=${tradeUrl}&items=${JSON.stringify(selectedItems)}`
+    }
+</script>
+
+<style>
+    .selected {
+        border: 4px double black;
+    }
+</style>

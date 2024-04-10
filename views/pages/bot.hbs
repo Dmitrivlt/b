@@ -1,0 +1,25 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Бот "{{ bot.username }}"</h1>
+</div>
+
+<form method="post" action="/api/admin/bot/{{ bot.id }}">
+    <div class="form-group">
+        <label>Username</label>
+        <input class="form-control" type="text" name="username" value="{{ bot.username }}">
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="text" name="password" value="{{ bot.password }}">
+    </div>
+    <div class="form-group">
+        <label>Shared secret</label>
+        <input class="form-control" type="text" name="shared_secret" value="{{ bot.shared_secret }}">
+    </div>
+    <div class="form-group">
+        <label>Identity secret</label>
+        <input class="form-control" type="text" name="identity_secret" value="{{ bot.identity_secret }}">
+    </div>
+    <button type="submit" class="btn btn-primary btn-icon-split">
+        <span class="text">Сохранить</span>
+    </button>
+</form>

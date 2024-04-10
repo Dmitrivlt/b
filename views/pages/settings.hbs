@@ -1,0 +1,33 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Настройки</h1>
+</div>
+
+<form method="post" action="/api/admin/settings">
+    <div class="form-group">
+        <label>Игроков для старта</label>
+        <input class="form-control" type="text" name="game_users_to_start" value="{{ settings.game_users_to_start }}">
+    </div>
+    <div class="form-group">
+        <label>Время для старта (сек.)</label>
+        <input class="form-control" type="text" name="game_time_to_start" value="{{ settings.game_time_to_start }}">
+    </div>
+    <div class="form-group">
+        <label>Комиссия в игре (%)</label>
+        <input class="form-control" type="text" name="game_fee" value="{{ settings.game_fee }}">
+    </div>
+    <div class="form-group">
+        <label>Минимальная ставка ($)</label>
+        <input class="form-control" type="text" name="game_min_bet" value="{{ settings.game_min_bet }}">
+    </div>
+    <div class="form-group">
+        <label>Фейк онлайн</label>
+        <input class="form-control" type="text" name="fake_online" value="{{ settings.fake_online }}">
+    </div>
+    <div class="form-group">
+        <label>Ссылка на обмен для комиссии</label>
+        <input class="form-control" type="text" name="commission_trade_url" value="{{ settings.commission_trade_url }}">
+    </div>
+    <button type="submit" class="btn btn-primary btn-icon-split">
+        <span class="text">Сохранить</span>
+    </button>
+</form>

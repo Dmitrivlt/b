@@ -1,0 +1,50 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Онлайн</h1>
+</div>
+
+<div class="row">
+    <div class="card shadow mb-4" style="width: 100%;">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTableUsers" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Имя</th>
+                        <th>SteamID64</th>
+                        <th>Действие</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Имя</th>
+                        <th>SteamID64</th>
+                        <th>Действие</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {{#each users}}
+                        <tr>
+                            <td>{{ this.id }}</td>
+                            <td>{{ this.username }}</td>
+                            <td><a href="https://steamcommunity.com/profiles/{{ this.steamId }}">{{ this.steamId }}</a></td>
+                            <td>
+                                <a href="/api/admin/user/{{ this.id }}" class="btn btn-primary btn-icon-split">
+                                    <span class="text">Посмотреть профиль</span>
+                                </a>
+                            </td>
+                        </tr>
+                    {{/each }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#dataTableUsers').dataTable({
+        "order": [[ 0, 'desc' ]]
+    });
+</script>

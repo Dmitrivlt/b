@@ -1,0 +1,252 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Пользователь "{{ user.username }}"</h1>
+</div>
+
+<form method="post" action="/api/admin/user/{{ user.id }}">
+    <div class="form-group">
+        <label>Имя</label>
+        <input class="form-control" type="text" name="username" value="{{ user.username }}">
+    </div>
+    <div class="form-group">
+        <label>SteamID64</label>
+        <input class="form-control" type="text" name="steamId" value="{{ user.steamId }}" disabled>
+    </div>
+    <div class="form-group">
+        <label>Ссылка на обмен</label>
+        <input class="form-control" type="text" name="trade_url" value="{{ user.trade_url }}">
+    </div>
+    <div class="form-group">
+        <label>Роль</label>
+        <select class="form-control" name="role">
+            <option
+                    {{#checkRole user.role "admin"}}
+                        selected
+                    {{/checkRole}}
+                    value="admin"
+            >Администратор</option>
+            <option
+                    {{#checkRole user.role "moderator"}}
+                        selected
+                    {{/checkRole}}
+                    value="moderator"
+            >Модератор</option>
+            <option
+                    {{#checkRole user.role "user"}}
+                        selected
+                    {{/checkRole}}
+                    value="user"
+            >Пользователь</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Бан в чате</label>
+        <select class="form-control" name="is_ban_chat">
+            <option
+                {{#checkRole user.is_ban_chat 1}}
+                selected
+                {{/checkRole}}
+                value="1"
+            >Заблокирован</option>
+            <option
+                {{#checkRole user.is_ban_chat 0}}
+                selected
+                {{/checkRole}}
+                value="0"
+            >Не заблокирован</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Сыграно игр</label>
+        <input class="form-control" type="text" name="total_played" value="{{ user.total_played }}" disabled>
+    </div>
+    <div class="form-group">
+        <label>Выиграно игр</label>
+        <input class="form-control" type="text" name="total_wins" value="{{ user.total_wins }}" disabled>
+    </div>
+    <div class="form-group">
+        <label>Выиграно предметов</label>
+        <input class="form-control" type="text" name="total_items" value="{{ user.total_items }}" disabled>
+    </div>
+    <div class="form-group">
+        <label>Выиграно в $</label>
+        <input class="form-control" type="text" name="total_win" value="{{ user.total_win }}" disabled>
+    </div>
+    <div class="form-group">
+        <label>Дата регистрации</label>
+        <input class="form-control" type="text" name="created_at" value="{{ formatDate user.created_at }}" disabled>
+    </div>
+    <button type="submit" class="btn btn-primary btn-icon-split">
+        <span class="text">Сохранить</span>
+    </button>
+</form>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="card shadow mb-4" style="margin-left: 10px; width: 100%;">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Игры</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTableWins" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th># Игры</th>
+                        <th>Банк</th>
+                        <th>Комиссия</th>
+                        <th>Шанс</th>
+                        <th>Выиграл</th>
+                        <th>Дата участия</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th># Игры</th>
+                        <th>Банк</th>
+                        <th>Комиссия</th>
+                        <th>Шанс</th>
+                        <th>Выиграл</th>
+                        <th>Дата участия</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {{#each games}}
+                        <tr>
+                            <td><a href="/api/admin/game/{{ this.game_id }}">{{ this.game_id }}</a></td>
+                            <td>{{ this.game_bank }}$</td>
+                            <td>{{ this.game_commission_bank }}$</td>
+                            <td>{{ sumChance this.game_bank this.sum }}%</td>
+                            <td>
+                                {{#checkRole this.bet_user_id this.game_winner_id}}
+                                   <span style="color: green">Выиграл</span>
+                                {{else}}
+                                   <span style="color: red">Проиграл</span>
+                                {{/checkRole}}
+                            </td>
+                            <td>{{ formatDate this.bet_created_at }}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="card shadow mb-4" style="margin-left: 10px; width: 100%;">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Тикеты</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTableTickets" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Тема</th>
+                        <th>Последнее сообщение от пользователя</th>
+                        <th>Статус</th>
+                        <th>Дата создания</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Тема</th>
+                        <th>Последнее сообщение от пользователя</th>
+                        <th>Статус</th>
+                        <th>Дата создания</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {{#each tickets}}
+                        <tr>
+                            <td><a href="/api/admin/support/{{ this.id }}">{{ this.id }}</a></td>
+                            <td>{{ this.subject }}</td>
+                            <td>
+                                {{#checkRole this.last_user 1}}
+                                    <span style="color: red">Да</span>
+                                {{else}}
+                                    <span style="color: green">Нет</span>
+                                {{/checkRole}}
+                            </td>
+                            <td>
+                                {{#checkRole this.is_closed 1}}
+                                    <span style="color: green">Закрыт</span>
+                                {{else}}
+                                    <span style="color: red">Открыт</span>
+                                {{/checkRole}}
+                            </td>
+                            <td>{{ formatDate this.created_at }}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="card shadow mb-4" style="margin-left: 10px; width: 100%;">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Участия в розыгрыше</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTableGiveaways" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Розыгрыш</th>
+                        <th>Статус</th>
+                        <th>Дата заявки</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Розыгрыш</th>
+                        <th>Статус</th>
+                        <th>Дата заявки</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {{#each giveaways}}
+                        <tr>
+                            <td>{{ this.giveaway.id }}</td>
+                            <td>{{ this.giveaway.item.market_hash_name }} ({{ this.giveaway.item.price }}$)</td>
+                            <td>
+                                {{#checkRole this.giveaway.is_finished 1}}
+                                    {{#checkRole this.giveaway.winner_id this.user_id}}
+                                        <span style="color: green">Выиграл</span>
+                                    {{else}}
+                                        <span style="color: red">Проиграл</span>
+                                    {{/checkRole}}
+                                {{else}}
+                                    Ожидает
+                                {{/checkRole}}
+                            </td>
+                            <td>{{ formatDate this.created_at }}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#dataTableWins').dataTable({
+        "order": [[ 0, 'desc' ]]
+    });
+
+    $('#dataTableTickets').dataTable({
+        "order": [[ 0, 'desc' ]]
+    });
+
+    $('#dataTableGiveaways').dataTable({
+        "order": [[ 0, 'desc' ]]
+    });
+</script>

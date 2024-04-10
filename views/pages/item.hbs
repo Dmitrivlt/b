@@ -1,0 +1,17 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Предмет "{{ item.market_hash_name }}"</h1>
+</div>
+
+<form method="post" action="/api/admin/items/{{ item.id }}/save">
+    <div class="form-group">
+        <label>Название</label>
+        <input class="form-control" type="text" disabled value="{{ item.market_hash_name }}">
+    </div>
+    <div class="form-group">
+        <label>Цена</label>
+        <input class="form-control" type="text" name="price" value="{{ item.price }}">
+    </div>
+    <button type="submit" class="btn btn-primary btn-icon-split">
+        <span class="text">Сохранить</span>
+    </button>
+</form>

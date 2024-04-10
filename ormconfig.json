@@ -1,0 +1,11 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "MNcYvB3Gte67pr6P",
+  "database": "rusthot",
+  "entities": ["./**/*.entity.js"],
+  "synchronize": true,
+  "autoLoadEntities": true
+}

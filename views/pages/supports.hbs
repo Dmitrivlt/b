@@ -1,0 +1,74 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Поддержка</h1>
+</div>
+
+<div class="row">
+    <div class="card shadow mb-4" style="width: 100%;">
+        <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTableTickets" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Пользователь</th>
+                                <th>ID игры</th>
+                                <th>Тема</th>
+                                <th>Последнее сообщение от пользователя</th>
+                                <th>Статус</th>
+                                <th>Дата создания</th>
+                                <th>Действие</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>Пользователь</th>
+                                <th>ID игры</th>
+                                <th>Тема</th>
+                                <th>Последнее сообщение от пользователя</th>
+                                <th>Статус</th>
+                                <th>Дата создания</th>
+                                <th>Действие</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            {{#each tickets}}
+                                <tr>
+                                    <td>{{ this.id }}</td>
+                                    <td><a href="/api/admin/user/{{ this.user.id }}">{{ this.user.username }}</a></td>
+                                    <td>{{ this.game_number }}</td>
+                                    <td>{{ this.subject }}</td>
+                                    <td>
+                                        {{#checkRole this.last_user 1}}
+                                            <span style="color: red">Да</span>
+                                        {{else}}
+                                            <span style="color: green">Нет</span>
+                                        {{/checkRole}}
+                                    </td>
+                                    <td>
+                                        {{#checkRole this.is_closed 1}}
+                                            <span style="color: green">Закрыт</span>
+                                        {{else}}
+                                            <span style="color: red">Открыт</span>
+                                        {{/checkRole}}
+                                    </td>
+                                    <td>{{ formatDate this.created_at }}</td>
+                                    <td>
+                                         <a href="/api/admin/support/{{ this.id }}" class="btn btn-primary btn-icon-split">
+                                            <span class="text">Открыть</span>
+                                         </a>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+    </div>
+</div>
+
+<script>
+    $('#dataTableTickets').dataTable({
+        "order": [[ 0, 'desc' ]]
+    });
+</script>

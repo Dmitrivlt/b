@@ -1,0 +1,106 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Игра #{{ game.id }}</h1>
+</div>
+
+<form>
+    <div class="form-group">
+        <label>Банк</label>
+        <span class="form-control">{{ game.bank }}$</span>
+    </div>
+
+    <div class="form-group">
+        <label>Комиссия</label>
+        <span class="form-control">{{ game.commission_bank }}$</span>
+    </div>
+
+    <div class="form-group">
+        <label>Пользователей</label>
+        <span class="form-control">{{ game.users }}</span>
+    </div>
+
+    <div class="form-group">
+        <label>Победитель</label>
+        <a class="form-control" href="/api/admin/user/{{ game.user.id }}">{{ game.user.username }}</a>
+    </div>
+
+    <div class="form-group">
+        <label>Шанс</label>
+        <span class="form-control">{{ game.chance }}%</span>
+    </div>
+
+    <div class="form-group">
+        <label>Номер раунда</label>
+        <span class="form-control">{{ game.round_number }}</span>
+    </div>
+
+    <div class="form-group">
+        <label>Хэш</label>
+        <span class="form-control">{{ game.hash }}</span>
+    </div>
+
+    <div class="form-group">
+        <label>Дата создания</label>
+        <span class="form-control">{{ formatDate game.created_at }}</span>
+    </div>
+
+    <div class="form-group">
+        <label>Дата окончания</label>
+        <span class="form-control">{{ formatDate game.updated_at }}</span>
+    </div>
+
+    <div class="form-group">
+        <label>Выигранные предметы</label>
+        <div style="display: flex;display: -webkit-flex; flex-wrap: wrap;-webkit-flex-wrap: wrap;margin: 0 -3px;">
+            {{#each game.win_items}}
+                <div style="width: 80px;height: 80px;margin: 3px 3px;">
+                    <div>
+                        <img
+                                width="94"
+                                height="94"
+                                src="https://community.cloudflare.steamstatic.com/economy/image/{{ this.icon_url }}/360fx360f"
+                        >
+                    </div>
+                    <p style="text-align: center;">{{ this.price }}$</p>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="form-group" style="margin-top: 50px;">
+        <label>Комиссионные предметы</label>
+        <div style="display: flex;display: -webkit-flex; flex-wrap: wrap;-webkit-flex-wrap: wrap;margin: 0 -3px;">
+            {{#each game.commission_items}}
+                <div style="width: 80px;height: 80px;margin: 3px 3px;">
+                    <div>
+                        <img
+                                width="94"
+                                height="94"
+                                src="https://community.cloudflare.steamstatic.com/economy/image/{{ this.icon_url }}/360fx360f"
+                        >
+                    </div>
+                    <p style="text-align: center;">{{ this.price }}$</p>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="form-group" style="margin-top: 50px;">
+        <label>Статус отправки</label>
+        {{#checkRole game.error_send_bot_ids null }}
+            <span class="form-control" style="color: green">Отправлен</span>
+        {{else}}
+            <span class="form-control" style="color: red; height: 50px;">
+                Ошибка
+                <a onclick="resendItem()" class="btn btn-primary btn-icon-split">
+                    <span class="text">Переотправить</span>
+                </a>
+            </span>
+        {{/checkRole}}
+    </div>
+</form>
+
+<script>
+    const resendItem = () => {
+      window.location.href = '/api/admin/game/{{ game.id }}/resend';
+    }
+</script>

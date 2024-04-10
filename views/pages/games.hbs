@@ -1,0 +1,71 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Игры</h1>
+</div>
+
+<div class="row">
+    <div class="card shadow mb-4" style="width: 100%;">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTableGames" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Банк</th>
+                        <th>Комиссия</th>
+                        <th>Пользователей</th>
+                        <th>Победитель</th>
+                        <th>Шанс</th>
+                        <th>Отправка</th>
+                        <th>Дата окончания</th>
+                        <th>Действие</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Банк</th>
+                        <th>Комиссия</th>
+                        <th>Пользователей</th>
+                        <th>Победитель</th>
+                        <th>Шанс</th>
+                        <th>Отправка</th>
+                        <th>Дата окончания</th>
+                        <th>Действие</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {{#each games}}
+                        <tr>
+                            <td>{{ this.id }}</td>
+                            <td>{{ this.bank }}$</td>
+                            <td>{{ this.commission_bank }}$</td>
+                            <td>{{ this.users }}</td>
+                            <td><a href="/api/admin/user/{{ this.user.id }}">{{ this.user.username }}</a></td>
+                            <td>{{ this.chance }}%</td>
+                            <td>
+                                {{#checkRole this.error_send_bot_ids null }}
+                                    <span style="color: green">Отправлен</span>
+                                {{else}}
+                                    <span style="color: red">Ошибка</span>
+                                {{/checkRole}}
+                            </td>
+                            <td>{{ formatDate this.updated_at }}</td>
+                            <td>
+                                <a href="/api/admin/game/{{ this.id }}" class="btn btn-primary btn-icon-split">
+                                    <span class="text">Подробнее</span>
+                                </a>
+                            </td>
+                        </tr>
+                    {{/each }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#dataTableGames').dataTable({
+        "order": [[ 0, 'desc' ]]
+    });
+</script>

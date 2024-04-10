@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Админ панель</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/api/admin">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">RustHot</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="/api/admin">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Панель управления</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">
+                Интерфейс
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/api/admin/users">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Пользователи</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/api/admin/games">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Игры</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/api/admin/giveaways">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Розыгрыши</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/api/admin/supports">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Поддержка</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">
+                Система
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/api/admin/bots">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Боты</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/api/admin/items">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Предметы</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/api/admin/online">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Онлайн</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/api/admin/commission">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Комиссия</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/api/admin/settings">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Настройки</span></a>
+            </li>
+        </ul>
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"></nav>
+
+                <div class="container-fluid">
+                    {{{body}}}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

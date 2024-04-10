@@ -1,0 +1,68 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Розыгрыши</h1>
+</div>
+
+<div class="row">
+    <div class="card shadow mb-4" style="width: 100%;">
+        <div class="card-body">
+            <a style="margin: 10px; float: right;" href="/api/admin/giveaway/create" class="btn btn-primary btn-icon-split">
+                <span class="text">Создать розыгрыш</span>
+            </a>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTableGiveaways" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Предмет</th>
+                        <th>Пользователей</th>
+                        <th>Победитель</th>
+                        <th>Статус</th>
+                        <th>Дата окончания</th>
+                        <th>Действие</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Предмет</th>
+                        <th>Пользователей</th>
+                        <th>Победитель</th>
+                        <th>Статус</th>
+                        <th>Дата окончания</th>
+                        <th>Действие</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {{#each giveaways}}
+                        <tr>
+                            <td>{{ this.id }}</td>
+                            <td>{{ this.item.market_hash_name }} ({{ this.item.price }}$)</td>
+                            <td>{{ this.users }}</td>
+                            <td><a href="/api/admin/user/{{ this.winner.id }}">{{ this.winner.username }}</a></td>
+                            <td>
+                                {{#checkRole this.is_finished 1}}
+                                    Окончен
+                                {{else}}
+                                    Активен
+                                {{/checkRole}}
+                            </td>
+                            <td>{{ formatDate this.end_time }}</td>
+                            <td>
+                                <a href="/api/admin/giveaway/{{ this.id }}/delete" class="btn btn-danger btn-icon-split">
+                                    <span class="text">Удалить</span>
+                                </a>
+                            </td>
+                        </tr>
+                    {{/each }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#dataTableGiveaways').dataTable({
+        "order": [[ 0, 'desc' ]]
+    });
+</script>
